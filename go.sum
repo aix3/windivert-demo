@@ -1,0 +1,10 @@
+github.com/google/btree v1.1.2 h1:xf4v41cLI2Z6FxbKm+8Bu+m8ifhj15JuZ9sa0jZCMUU=
+github.com/google/btree v1.1.2/go.mod h1:qOPhT0dTNdNzV6Z/lhRX0YXUafgPLFUh+gZMl761Gm4=
+github.com/imgk/divert-go v0.0.0-20220205193416-faaa83c2c10a h1:wkU8llyuZtm80Ak6f7/QAmCq/LSwF8IOzMCRRGhb3Fk=
+github.com/imgk/divert-go v0.0.0-20220205193416-faaa83c2c10a/go.mod h1:8j670dnMAWuHP3AHj7Zd8b4HhGw4mdTo8aYhCWNsAeU=
+golang.org/x/sys v0.26.0 h1:KHjCJyddX0LoSTb3J+vWpupP9p0oznkqVk/IfjymZbo=
+golang.org/x/sys v0.26.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
+golang.org/x/time v0.7.0 h1:ntUhktv3OPE6TgYxXWv9vKvUSJyIFJlyohwbkEwPrKQ=
+golang.org/x/time v0.7.0/go.mod h1:3BpzKBy/shNhVucY/MWOyx10tF3SFh9QdLuxbVysPQM=
+gvisor.dev/gvisor v0.0.0-20241108012608-5901531b85ba h1:ZXzGZ6Md+Vspe9x45C6QlpCdpwYC6nHFtWIfZzTqB0k=
+gvisor.dev/gvisor v0.0.0-20241108012608-5901531b85ba/go.mod h1:5DMfjtclAbTIjbXqO1qCe2K5GKKxWz2JHvCChuTcJEM=
