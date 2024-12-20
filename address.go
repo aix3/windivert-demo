@@ -1,4 +1,4 @@
-package windrivet
+package windivert
 
 import "github.com/imgk/divert-go"
 

@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"log"
-	windrivet "windivert"
+	"net/http"
 
+	"windivert"
 	"windivert/utils"
 	"windivert/utils/prependable"
 
@@ -36,7 +38,7 @@ func main() {
 		panic(err)
 	}
 
-	addr := windrivet.Address{
+	addr := windivert.Address{
 		Address: new(divert.Address),
 	}
 	nw := addr.Network()
@@ -56,7 +58,8 @@ func main() {
 		tcp := header.TCP(ip.Payload())
 		// 检查是否为 HTTP 请求
 		if bytes.HasPrefix(tcp.Payload(), []byte("GET ")) {
-			fmt.Println("HTTP request detected")
+			req, _ := http.ReadRequest(bufio.NewReader(bytes.NewReader(tcp.Payload())))
+			fmt.Println("HTTP request detected:", req.Host+req.URL.Path)
 
 			// 发送 RST 到 HTTP 服务端，断开此连接
 			rst := createRstPacket(ip, tcp)
@@ -65,7 +68,7 @@ func main() {
 				log.Printf("Error sending packet: %v", err)
 			}
 
-			addr.SetDirection(windrivet.Inbound)
+			addr.SetDirection(windivert.Inbound)
 
 			// 发送自定义的 response 到 HTTP 客户端
 			resp := createDataPacket(ip, tcp, []byte(httpResponse))

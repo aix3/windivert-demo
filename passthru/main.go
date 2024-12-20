@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"log"
+	"net/http"
 	"windivert/utils"
 
 	"github.com/imgk/divert-go"
@@ -39,7 +41,7 @@ func main() {
 			continue
 		}
 
-		detectHTTPPacket(packet[:packetLen], addr)
+		detectHTTPPacket(packet[:packetLen])
 
 		_, err = handle.Send(packet[:packetLen], addr)
 		if err != nil {
@@ -48,16 +50,18 @@ func main() {
 	}
 }
 
-func detectHTTPPacket(packet []byte, addr *divert.Address) {
+func detectHTTPPacket(packet []byte) {
 	ip := header.IPv4(packet)
 	tcp := header.TCP(ip.Payload())
 
 	// 检查是否为 HTTP 请求
 	payload := tcp.Payload()
 	if bytes.HasPrefix(payload, []byte("GET ")) || bytes.HasPrefix(payload, []byte("POST ")) {
-		fmt.Printf("HTTP request detected, addr: %+v\n", addr)
+		req, _ := http.ReadRequest(bufio.NewReader(bytes.NewReader(tcp.Payload())))
+		fmt.Println("HTTP request detected:", req.Host+req.URL.Path)
 	}
 	if bytes.HasPrefix(payload, []byte("HTTP/1.1 ")) {
-		fmt.Printf("HTTP response detected, addr: %+v\n", addr)
+		res, _ := http.ReadResponse(bufio.NewReader(bytes.NewReader(tcp.Payload())), nil)
+		fmt.Println("HTTP response detected: ", res.Header)
 	}
 }

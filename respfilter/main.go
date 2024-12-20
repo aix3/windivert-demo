@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"log"
+	"net/http"
 
 	"windivert/utils"
 	"windivert/utils/prependable"
@@ -53,7 +55,8 @@ func main() {
 		tcp := header.TCP(ip.Payload())
 		// 检查是否为 HTTP 请求
 		if bytes.HasPrefix(tcp.Payload(), []byte("HTTP/1.1")) {
-			fmt.Println("HTTP response detected")
+			res, _ := http.ReadResponse(bufio.NewReader(bytes.NewReader(tcp.Payload())), nil)
+			fmt.Println("HTTP response detected: ", res.Header)
 
 			resp := createDataPacket(ip, tcp, []byte(httpResponse))
 			_, err := handle.Send(resp, addr)
